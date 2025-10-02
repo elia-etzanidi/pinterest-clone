@@ -9,17 +9,22 @@ import PostPage from './routes/postPage/postPage.jsx'
 import { Routes, Route, BrowserRouter } from "react-router";
 import ProfilePage from './routes/profilePage/profilePage.jsx'
 import SearchPage from './routes/searchPage/searchPage.jsx'
+import MainLayout from './routes/layouts/mainLayout.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter> 
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/create" element={<CreatePage />} />
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/create" element={<CreatePage />} />
+          <Route path="/pin/:id" element={<PostPage />} />
+          <Route path="/:username" element={<ProfilePage />} />
+          <Route path="/search" element={<SearchPage />} />
+        </Route>
+        
         <Route path="/auth" element={<AuthPage />} />
-        <Route path="/pin/:id" element={<PostPage />} />
-        <Route path="/:username" element={<ProfilePage />} />
-        <Route path="/search" element={<SearchPage />} />
+        
       </Routes>
     </BrowserRouter>  
   </StrictMode>,
