@@ -1,8 +1,9 @@
 import './homePage.css'
+import Gallery from '../../components/gallery/gallery'
 
 const homePage = () => {
   return (
-    <div className='homePage'>homePage</div>
+    <Gallery />
   )
 }
 
