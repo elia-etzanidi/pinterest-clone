@@ -1,5 +1,7 @@
 import './profilePage.css'
 import Image from '../../components/image/Image'
+import Gallery from '../../components/gallery/gallery'
+import Collections from '../../components/collections/collections'
 import { useState } from 'react'
 
 const profilePage = () => {
@@ -30,6 +32,7 @@ const [type, setType] = useState('saved')
         <span onClick={() => setType("created")} className={type==="created" ? "active" : ""}>Created</span>
         <span onClick={() => setType("saved")} className={type==="saved" ? "active" : ""}>Saved</span>
       </div>
+      {type === "created" ? <Gallery/> : <Collections/>}
     </div>
 
   )
