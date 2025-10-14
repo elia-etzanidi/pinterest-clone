@@ -60,7 +60,7 @@ const createPage = () => {
             <label htmlFor="tags">Tagged Topics</label>
             <input 
               type="text" 
-              placeholder='Add taggs' 
+              placeholder='Add tags' 
               name='tags' 
               id='tags' 
             />
