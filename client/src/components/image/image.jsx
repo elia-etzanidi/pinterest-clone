@@ -1,9 +1,10 @@
 import { Image } from '@imagekit/react'
 
-const image = ({src,alt,className,w,h}) => {
+const image = ({path,src,alt,className,w,h}) => {
   return (
     <Image 
         urlEndpoint={import.meta.env.VITE_URL_IK_ENDPOINT} 
+        path={path}
         src={src} 
         transformation={[
             {

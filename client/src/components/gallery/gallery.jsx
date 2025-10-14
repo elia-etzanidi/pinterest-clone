@@ -129,14 +129,12 @@ const gallery = () => {
   if (error) return "An error has occured: " + error.message
   if (isPending) return "Loading.."
 
-  console.log(data);
-
   return (
     <div className='gallery'>
-      {/*{data?.map(item => (
-        <GalleryItem key={item.id} item={item}/>
+      {data?.map(item => (
+        <GalleryItem key={item._id} item={item}/>
 
-      ))}*/}
+      ))}
     </div>
   )
 };
