@@ -8,6 +8,9 @@ import boardRouter from './routes/board.route.js'
 import connectDB from './utils/connectDB.js'
 const app = express();
 
+//lets express send json
+app.use(express.json())
+
 app.use("/users", userRouter)
 app.use("/pins", pinRouter)
 app.use("/comments", commentRouter)
