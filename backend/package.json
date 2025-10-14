@@ -1,11 +1,12 @@
 {
-  "name":"lamapin-api",
-  "main":"indez.js",
-  "type":"module",
-  "scripts":{
-    "dev":" node --watch --env-file=.env index.js"
+  "name": "lamapin-api",
+  "main": "indez.js",
+  "type": "module",
+  "scripts": {
+    "dev": " node --watch --env-file=.env index.js"
   },
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "mongoose": "^8.19.1"
   }
 }
