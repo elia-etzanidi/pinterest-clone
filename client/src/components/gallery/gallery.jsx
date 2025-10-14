@@ -1,6 +1,6 @@
 import './gallery.css';
 import GalleryItem from '../galleryItem/galleryItem';
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios"
 
 const items = [
@@ -114,27 +114,32 @@ const items = [
   }
 ];
 
-const fetchPins = async()=>{
-  const res = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/pins`);
+const fetchPins = async({pageParam})=>{
+  const res = await axios.get(
+    `${import.meta.env.VITE_API_ENDPOINT}/pins?cursor=${pageParam}`
+  );
   return res.data;
 };
 
 const gallery = () => {
-
-  const { isPending, error, data } = useQuery({
+  const { data, fetchNextPage, status } = useInfiniteQuery({
     queryKey: ["pins"], 
-    queryFn: fetchPins 
+    queryFn: fetchPins,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, pages) => lastPage.nextCursor, 
   });
-  
-  if (error) return "An error has occured: " + error.message
-  if (isPending) return "Loading.."
+
+  if (status === "pending") return "Loading..";
+  if (status === "error") return "Something went wrong... ";
+
+  console.log(data);
 
   return (
     <div className='gallery'>
-      {data?.map(item => (
+      {/*{data?.map(item => (
         <GalleryItem key={item._id} item={item}/>
 
-      ))}
+      ))}*/}
     </div>
   )
 };
