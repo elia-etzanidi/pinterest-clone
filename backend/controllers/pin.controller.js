@@ -8,6 +8,8 @@ export const getPins = async (req,res) => {
         .skip(pageNumber * LIMIT);
 
     const hasNextPage = pins.length === LIMIT;
+
+    await new Promise(resolve=>setTimeout(resolve,3000))
         
     //200 = succesfull
     res
