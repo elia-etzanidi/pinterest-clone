@@ -1,18 +1,28 @@
-import './topBar.css'
-import UserButton from '../userButton/userButton'
+import './topBar.css';
+import UserButton from '../userButton/userButton';
+import Image from "../image/image"
+import { useNavigate } from "react-router";
 
 const TopBar = () => {
+
+  const navigate = useNavigate()
+  const handleSubmit = (e) => {
+      //prevent refresh of the page
+      e.preventDefault();
+      //0 because we have one input
+      navigate(`/search?search=${e.target[0].value}`);
+    };
+
   return (
     <div className='topBar'>
       {/* SEARCH BAR */}
-      <div className="search">
-        <img src="/general/search.svg" alt="" />
+      <form onSubmit={handleSubmit} className="search">
+        <Image src="/general/search.svg" alt="" />
         <input type="text" placeholder='Search' />
-      </div>
+      </form>
       {/* USER*/}
       <UserButton />
     </div>
-  )
-}
+)};
 
-export default TopBar
+export default TopBar;

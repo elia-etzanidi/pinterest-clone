@@ -2,14 +2,22 @@ import Pin from "../models/pin.model.js";
 
 export const getPins = async (req,res) => {
     const pageNumber = Number(req.query.cursor) || 0;
-    const LIMIT = 21;
-    const pins = await Pin.find()
+    const search = req.query.search;
+    const LIMIT = 30;
+
+    // finding the search value in post title or tags
+    const pins = await Pin.find( search ? {
+        $or: [
+            // regex finds word even when inside a string, option: case insensitive
+            {title: { $regex:search, $options:"i" }},
+            // using in because tags is an array
+            {tags: { $in: [search] }}
+        ]
+    } : {} )
         .limit(LIMIT)
         .skip(pageNumber * LIMIT);
 
     const hasNextPage = pins.length === LIMIT;
-
-    await new Promise(resolve=>setTimeout(resolve,3000))
         
     //200 = succesfull
     res
