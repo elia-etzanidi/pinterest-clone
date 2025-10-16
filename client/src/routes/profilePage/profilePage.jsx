@@ -20,7 +20,7 @@ const profilePage = () => {
 
   if (isPending) return "Loading...";
   if (error) return "An error has occured: " + error.message;
-  if (!data) return "User not found";
+  if (!data) return "User not found!";
 
   console.log(data)
 
@@ -30,11 +30,11 @@ const profilePage = () => {
         className="profileImg" 
         w={100}
         h={100}
-        src="/general/noAvatar.png" 
+        src={data.img || "/general/noAvatar.png"}
         alt="" 
       />
-      <h1 className='profileName'>John Doe</h1>
-      <span className='profileUsername'>@jonhdoe</span>
+      <h1 className='profileName'>{data.displayName}</h1>
+      <span className='profileUsername'>@{data.username}</span>
       <div className="followCount">10 followers • 20 following</div>
       <div className="profileInteractions">
         <Image src="/general/share.svg" alt="" />
@@ -48,7 +48,7 @@ const profilePage = () => {
         <span onClick={() => setType("created")} className={type==="created" ? "active" : ""}>Created</span>
         <span onClick={() => setType("saved")} className={type==="saved" ? "active" : ""}>Saved</span>
       </div>
-      {type === "created" ? <Gallery/> : <Collections/>}
+      {type === "created" ? <Gallery userId={data._id} /> : <Collections/>}
     </div>
 
   )

@@ -4,6 +4,7 @@ import User from "../models/user.model.js";
 export const getPins = async (req, res) => {
     const pageNumber = Number(req.query.cursor) || 0;
     const search = req.query.search;
+    const userId = req.query.userId;
     const LIMIT = 30;
 
     // finding the search value in post title or tags
@@ -16,7 +17,8 @@ export const getPins = async (req, res) => {
                     // using in because tags is an array
                     { tags: { $in: [search] }}
                 ],
-            } : {} 
+              } 
+            : userId ? { user:userId } : {}
     )
         .limit(LIMIT)
         .skip(pageNumber * LIMIT);
