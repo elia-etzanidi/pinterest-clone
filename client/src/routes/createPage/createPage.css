@@ -97,6 +97,7 @@
 small{
     color: #a6a6a6;
     font-size: 13px;
+    margin-bottom: 30px;
 }
 
 @media (max-width: 1104px) {
