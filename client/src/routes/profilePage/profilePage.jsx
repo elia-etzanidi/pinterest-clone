@@ -1,7 +1,7 @@
 import './profilePage.css';
 import Image from '../../components/image/Image';
 import Gallery from '../../components/gallery/gallery';
-import Collections from '../../components/collections/collections';
+import Boards from '../../components/boards/boards';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import apiRequest from "../../utils/apiRequest";
@@ -21,8 +21,6 @@ const profilePage = () => {
   if (isPending) return "Loading...";
   if (error) return "An error has occured: " + error.message;
   if (!data) return "User not found!";
-
-  console.log(data)
 
   return (
     <div className='profilePage'>
@@ -48,7 +46,7 @@ const profilePage = () => {
         <span onClick={() => setType("created")} className={type==="created" ? "active" : ""}>Created</span>
         <span onClick={() => setType("saved")} className={type==="saved" ? "active" : ""}>Saved</span>
       </div>
-      {type === "created" ? <Gallery userId={data._id} /> : <Collections/>}
+      {type === "created" ? <Gallery userId={data._id} /> : <Boards userId={data._id}/>}
     </div>
 
   )
