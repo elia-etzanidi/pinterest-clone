@@ -1,5 +1,5 @@
 import './postPage.css';
-import Image from '../../components/image/image';
+import Image from '../../components/image/Image';
 import PostInteractions from '../../components/postInteractions/postInteractions';
 import Comments from '../../components/comments/comments';
 import { Link , useParams } from 'react-router';
@@ -33,7 +33,7 @@ const postPage = () => {
             <Image src={data.user.img || "/general/noAvatar.png"} />
             <span>{data.user.displayName}</span>
           </Link>
-          <Comments />
+          <Comments id={data._id} />
         </div>
       </div>
     </div>

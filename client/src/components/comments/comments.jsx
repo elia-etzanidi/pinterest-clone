@@ -1,11 +1,23 @@
-import './comments.css'
-import Image from '../image/Image'
-import EmojiPicker from 'emoji-picker-react'
-import { useState } from 'react'
+import './comments.css';
+import Image from '../image/Image';
+import EmojiPicker from 'emoji-picker-react';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import apiRequest from '../../utils/apiRequest';
 
-const comments = () => {
+const comments = ({ id }) => {
 
-const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const {isPending, error, data}= useQuery({
+          queryKey: ["comments", id],
+          queryFn: () => apiRequest.get(`/comments/${id}`).then((res) => res.data),
+      });
+
+      if (isPending) return "Loading...";
+      if (error) return "An error has occured: " + error.message;
+
+  console.log(data)
 
   return (
     <div className='comments'>
@@ -70,6 +82,6 @@ const [open, setOpen] = useState(false);
         </form>
     </div>
   )
-}
+};
 
-export default comments
+export default comments;
