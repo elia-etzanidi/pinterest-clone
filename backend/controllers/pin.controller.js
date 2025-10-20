@@ -5,6 +5,7 @@ export const getPins = async (req, res) => {
     const pageNumber = Number(req.query.cursor) || 0;
     const search = req.query.search;
     const userId = req.query.userId;
+    const boardId = req.query.boardId;
     const LIMIT = 30;
 
     // finding the search value in post title or tags
@@ -18,7 +19,11 @@ export const getPins = async (req, res) => {
                     { tags: { $in: [search] }}
                 ],
               } 
-            : userId ? { user:userId } : {}
+            : userId 
+            ? { user:userId } 
+            : boardId
+            ? { board:boardId}
+            : {}
     )
         .limit(LIMIT)
         .skip(pageNumber * LIMIT);
