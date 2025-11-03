@@ -4,6 +4,7 @@ import EmojiPicker from 'emoji-picker-react';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import apiRequest from '../../utils/apiRequest';
+import Comment from './comment';
 
 const comments = ({ id }) => {
 
@@ -22,51 +23,11 @@ const comments = ({ id }) => {
   return (
     <div className='comments'>
       <div className="commentList">
-        <span className='commentCount'>5 comments</span>
+        <span className='commentCount'>{data.length === 0 ? "No comments" : data.length + " Comments"}</span>
         
-        <div className="comment">
-          <Image src="/general/noAvatar.png" alt="" />
-          <div className="commentContent">
-            <span className='commentUsername'>John Doe</span>
-            <p className='commentText'>
-              This is such a great idea! I love how you've organized everything so well. Can't wait to try it out myself.
-            </p>
-            <span className='commentTime'>1h</span>
-          </div>
-        </div>
-        
-        <div className="comment">
-          <Image src="/general/noAvatar.png" alt="" />
-          <div className="commentContent">
-            <span className='commentUsername'>John Doe</span>
-            <p className='commentText'>
-              This is such a great idea! I love how you've organized everything so well. Can't wait to try it out myself.
-            </p>
-            <span className='commentTime'>1h</span>
-          </div>
-        </div>
-        
-        <div className="comment">
-          <Image src="/general/noAvatar.png" alt="" />
-          <div className="commentContent">
-            <span className='commentUsername'>John Doe</span>
-            <p className='commentText'>
-              This is such a great idea! I love how you've organized everything so well. Can't wait to try it out myself.
-            </p>
-            <span className='commentTime'>1h</span>
-          </div>
-        </div>
-        
-        <div className="comment">
-          <Image src="/general/noAvatar.png" alt="" />
-          <div className="commentContent">
-            <span className='commentUsername'>John Doe</span>
-            <p className='commentText'>
-              This is such a great idea! I love how you've organized everything so well. Can't wait to try it out myself.
-            </p>
-            <span className='commentTime'>1h</span>
-          </div>
-        </div>
+        {data.map((comment) => (
+          <Comment key={comment._id} comment={comment} />
+        ))}
         
       </div>
       <form className='commentForm'>
