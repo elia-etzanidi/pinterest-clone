@@ -1,12 +1,15 @@
 import './authPage.css'
 import Image from '../../components/image/Image'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import apiRequest from '../../utils/apiRequest'
 
 const authPage = () => {
 
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,7 +18,12 @@ const authPage = () => {
     const data = Object.fromEntries(formData);
 
     try {
-      const res = await apiRequest.post("/users/auth/register", data);
+      const res = await apiRequest.post(
+        `/users/auth/${isRegister ? "register" : "login"}`, 
+        data
+      );
+
+      navigate("/")
 
     } catch (err) {
       setError(err.response.data.message);
@@ -50,7 +58,7 @@ const authPage = () => {
             {error && <p className='error'>{error}</p>}
           </form>
          ) : (
-          <form key="loginForm">
+          <form key="loginForm" onSubmit={handleSubmit}>
           <div className="formGroup">
             <label htmlFor="">Email</label>
             <input type="email" placeholder='Email' required name="email" id="email" />
