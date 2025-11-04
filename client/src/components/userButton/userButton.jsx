@@ -14,13 +14,14 @@ const userButton = () => {
   //TEMPORARY USER 
   //const currentUser = true
 
-  const { currentUser } = useAuthStore();
+  const { currentUser, removeCurrentUser } = useAuthStore();
 
   console.log(currentUser);
 
   const handleLogout = async () => {
     try {
         await apiRequest.post("/users/auth/logout", {});
+        removeCurrentUser();
         navigate("/auth");
     }catch (error) {
         console.log(err);
@@ -29,7 +30,7 @@ const userButton = () => {
 
   return currentUser ? (
     <div className="userButton">
-        <img src="/general/noAvatar.png" alt="" />
+        <img src={currentUser.img || "/general/noAvatar.png"} alt="" />
         <div onClick={() => setOpen((prev) => !prev)}>
             <img 
                 src="/general/arrow.svg" 
@@ -39,7 +40,7 @@ const userButton = () => {
         </div>
         {open && (
             <div className="userOptions">
-                <div className="userOption">Profile</div>
+                <Link to={`/profile/${currentUser.username}`} className="userOption">Profile</Link>
                 <div className="userOption">Settings</div>
                 <div className="userOption" onClick={handleLogout}>Logout</div>
             </div>
