@@ -3,6 +3,7 @@ import Image from '../../components/image/Image'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import apiRequest from '../../utils/apiRequest'
+import useAuthStore from '../../utils/authStore'
 
 const authPage = () => {
 
@@ -10,6 +11,8 @@ const authPage = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+
+  const { setCurrentUser } = useAuthStore();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,6 +26,7 @@ const authPage = () => {
         data
       );
 
+      setCurrentUser(res.data);
       navigate("/")
 
     } catch (err) {

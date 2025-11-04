@@ -2,15 +2,21 @@ import { useState } from 'react'
 import './userButton.css'
 import apiRequest from '../../utils/apiRequest'
 import { useNavigate } from 'react-router-dom'
+import useAuthStore from '../../utils/authStore'
+import { Link } from 'react-router-dom'
 
 const userButton = () => {
 
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   //TEMPORARY USER 
-  const currentUser = true
+  //const currentUser = true
+
+  const { currentUser } = useAuthStore();
+
+  console.log(currentUser);
 
   const handleLogout = async () => {
     try {
@@ -19,7 +25,7 @@ const userButton = () => {
     }catch (error) {
         console.log(err);
     }
-  }
+  };
 
   return currentUser ? (
     <div className="userButton">
@@ -40,9 +46,9 @@ const userButton = () => {
         )}
     </div>
   ) : (
-    <a href="/" className="loginLink">
+    <Link to="/auth" className="loginLink">
         Login / Sign Up
-    </a>)
+    </Link>)
 }    
 
 export default userButton
