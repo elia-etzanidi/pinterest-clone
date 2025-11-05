@@ -14,8 +14,6 @@ const comments = ({ id }) => {
       if (isPending) return "Loading...";
       if (error) return "An error has occured: " + error.message;
 
-  console.log(data)
-
   return (
     <div className='comments'>
       <div className="commentList">
@@ -25,7 +23,7 @@ const comments = ({ id }) => {
           <Comment key={comment._id} comment={comment} />
         ))}
       </div>
-      <CommentForm />
+      <CommentForm id={id} />
     </div>
   )
 };

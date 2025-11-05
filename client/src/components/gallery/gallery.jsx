@@ -24,8 +24,6 @@ const gallery = ({ search, userId, boardId }) => {
   if (status === "pending") return "Loading..";
   if (status === "error") return "Something went wrong... ";
 
-  console.log(data);
-
   const allPins = data?.pages.flatMap((page)=> page.pins) || [];
 
   return (
