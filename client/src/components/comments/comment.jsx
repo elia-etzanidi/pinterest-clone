@@ -4,7 +4,7 @@ import { format } from 'timeago.js';
 const comment = ({comment}) => {
   return (
     <div className="comment">
-        <Image src={comment.user.image || "/general/noAvatar.png"} alt="" />
+        <Image src={comment.user.img || "/general/noAvatar.png"} alt="" />
         <div className="commentContent">
             <span className='commentUsername'>{comment.user.displayName}</span>
             <p className='commentText'>

@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import apiRequest from "../../utils/apiRequest";
 import { useParams } from "react-router";
+import FollowButton from './followButton';
 
 const profilePage = () => {
 
@@ -33,12 +34,15 @@ const profilePage = () => {
       />
       <h1 className='profileName'>{data.displayName}</h1>
       <span className='profileUsername'>@{data.username}</span>
-      <div className="followCount">10 followers • 20 following</div>
+      <div className="followCount">{data.followerCount} followers • {data.followingCount} following</div>
       <div className="profileInteractions">
         <Image src="/general/share.svg" alt="" />
         <div className="profileButtons">
           <button>Message</button>
-        <button>Follow</button>
+          <FollowButton 
+            isFollowing={data.isFollowing} 
+            username={data.username} 
+          />
         </div>
         <Image src="/general/more.svg" alt="" />
       </div>
