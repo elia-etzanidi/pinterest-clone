@@ -3,6 +3,7 @@ import Image from '../../components/image/Image'
 import useAuthStore from '../../utils/authStore'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import Editor from '../../components/editor/editor'
 
 const createPage = () => {
 
@@ -16,20 +17,24 @@ useEffect(() => {
 }, [navigate, currentUser]);
 
 const [file, setFile] = useState(null);
+const [isEditing, setIsEditing] = useState(false);
 
 const previewImgUrl = file ? URL.createObjectURL(file) : null;
 
   return (
     <div className='createPage'>
       <div className="createTop">
-        <h1>Create Pin</h1>
-        <button>Publish</button>
+        <h1>{isEditing ? "Design your pin" : "Create Pin"}</h1>
+        <button>{isEditing ? "Done" : "Publish"}</button>
       </div>
-      <div className="createBottom">
+      {isEditing ? (
+        <Editor/>
+      ) : (
+        <div className="createBottom">
         {previewImgUrl ? (
           <div className="preview">
             <img src={previewImgUrl} alt="" />
-            <div className="editIcon">
+            <div className="editIcon" onClick={()=>setIsEditing(true)}>
               <Image src="/general/edit.svg" alt="" />
             </div>
           </div>
@@ -102,6 +107,7 @@ const previewImgUrl = file ? URL.createObjectURL(file) : null;
           </div>
         </form>
       </div>
+      )}
     </div>
   )
 }
