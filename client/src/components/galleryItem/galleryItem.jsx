@@ -1,6 +1,6 @@
 import './galleryItem.css'
 import { Link } from 'react-router'
-import Image from '../image/image'
+import Image from '../image/Image'
 
 const galleryItem = ({ item }) => {
 
