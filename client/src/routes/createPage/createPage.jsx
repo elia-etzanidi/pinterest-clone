@@ -1,7 +1,24 @@
 import './createPage.css'
 import Image from '../../components/image/Image'
+import useAuthStore from '../../utils/authStore'
+import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 const createPage = () => {
+
+const { currentUser } = useAuthStore();
+const navigate = useNavigate();
+
+useEffect(() => {
+  if (!currentUser) {
+    navigate('/auth')
+  }
+}, [navigate, currentUser]);
+
+const [file, setFile] = useState(null);
+
+const previewImgUrl = file ? URL.createObjectURL(file) : null;
+
   return (
     <div className='createPage'>
       <div className="createTop">
@@ -9,15 +26,32 @@ const createPage = () => {
         <button>Publish</button>
       </div>
       <div className="createBottom">
-        <div className="upload">
-          <div className="uploadTitle">
-            <Image src="/general/upload.svg" alt="" />
-            <span>Choose a file</span>
+        {previewImgUrl ? (
+          <div className="preview">
+            <img src={previewImgUrl} alt="" />
+            <div className="editIcon">
+              <Image src="/general/edit.svg" alt="" />
+            </div>
           </div>
-          <div className="uploadInfo">
-            We recommend using high quality .jpg files less than 20MB or .mp4 files less than 200Mb.
-          </div>
-        </div>
+        ) : (
+          <>
+            <label htmlFor='file' className="upload">
+            <div className="uploadTitle">
+              <Image src="/general/upload.svg" alt="" />
+              <span>Choose a file</span>
+            </div>
+            <div className="uploadInfo">
+              We recommend using high quality .jpg files less than 20MB or .mp4 files less than 200Mb.
+            </div>
+            </label>
+            <input 
+              type="file" 
+              id="file" 
+              hidden 
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+          </>
+        )}
         <form className="createForm">
           <div className="createFormItem">
             <label htmlFor="title">Title</label>
