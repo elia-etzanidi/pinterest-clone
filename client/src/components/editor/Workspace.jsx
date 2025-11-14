@@ -1,8 +1,12 @@
 
-const Workspace = () => {
+const Workspace = ({previewImg}) => {
   return (
-    <div className="workspace">Workspace</div>
-  )
-}
+    <div className="workspace">
+      <div className="canvas">
+        <img src={previewImg.url} alt="" />
+      </div>
+    </div>
+  );
+};
 
-export default Workspace
+export default Workspace;
