@@ -3,10 +3,14 @@ import useEditorStore from '../../utils/editorStore'
 
 const Layers = () => {
 
-  const {selectedLayer, setSelectedLayer } = useEditorStore();
+  const {selectedLayer, setSelectedLayer, addText } = useEditorStore();
 
   const handleSelectedLayer = (layer) => {
     setSelectedLayer(layer);
+
+    if(layer === "text"){
+      addText();
+    }
   }
 
   return (
