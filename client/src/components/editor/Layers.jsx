@@ -3,7 +3,7 @@ import useEditorStore from '../../utils/editorStore'
 
 const Layers = () => {
 
-  const {selectedLayer, setSelectedLayer, addText } = useEditorStore();
+  const {selectedLayer, setSelectedLayer, addText, canvasOptions } = useEditorStore();
 
   const handleSelectedLayer = (layer) => {
     setSelectedLayer(layer);
@@ -28,7 +28,7 @@ const Layers = () => {
       </div>
 
       <div onClick={()=> handleSelectedLayer("canvas")} className={`layer ${selectedLayer === "canvas" ? "selected" : ""}`}>
-        <div className="layerImage" style={{backgroundColor: "teal"}}></div>
+        <div className="layerImage" style={{backgroundColor: canvasOptions.backgroundColor}}></div>
         <span>Canvas</span>
       </div>
     </div>
