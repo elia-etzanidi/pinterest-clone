@@ -2,13 +2,18 @@ import './createPage.css'
 import IKImage from '../../components/image/Image'
 import useAuthStore from '../../utils/authStore'
 import { useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Editor from '../../components/editor/editor'
+import useEditorStore from '../../utils/editorStore'
+import apiRequest from '../../utils/apiRequest'
 
 const createPage = () => {
 
 const { currentUser } = useAuthStore();
 const navigate = useNavigate();
+
+const formRef = useRef();
+const {textOptions, canvasOptions} = useEditorStore()
 
 const [file, setFile] = useState(null);
 const [previewImg, setPreviewImg] = useState({
@@ -38,11 +43,33 @@ useEffect(() => {
   }
 }, [file]);
 
+const handleSubmit = async () => {
+  if(isEditing) {
+    setIsEditing(false);
+  } else {
+    const formData = new FormData(formRef.current);
+    formData.append("media", file);
+    formData.append("textOptions", JSON.stringify(textOptions));
+    formData.append("canvasOptions", JSON.stringify(canvasOptions));
+
+    try{
+      const res = await apiRequest.post("/pins", formData, {
+        headers:{
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(res);
+    } catch (err) {
+      console.log("Error creating pin:", err);
+    }
+  }
+};
+
   return (
     <div className='createPage'>
       <div className="createTop">
         <h1>{isEditing ? "Design your pin" : "Create Pin"}</h1>
-        <button>{isEditing ? "Done" : "Publish"}</button>
+        <button onClick={handleSubmit}>{isEditing ? "Done" : "Publish"}</button>
       </div>
       {isEditing ? (
         <Editor previewImg={ previewImg }/>
@@ -74,7 +101,7 @@ useEffect(() => {
             />
           </>
         )}
-        <form className="createForm">
+        <form className="createForm" ref={formRef}>
           <div className="createFormItem">
             <label htmlFor="title">Title</label>
             <input 

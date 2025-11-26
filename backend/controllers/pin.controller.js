@@ -43,3 +43,22 @@ export const getPin = async (req, res) => {
 
     res.status(200).json(pin)
 };
+
+export const createPin = async (req, res) => {
+    const {title, description, link, board, tags, textOptions, canvasOptions} = 
+        req.body;
+
+    const media = req.files.media;
+
+    if(!title,!description,!media) {
+        return res.status(400).json({ message: "All fields are required."});
+    }
+
+    const parsedTextOptions = JSON.parse(textOptions || "{}");
+    const parsedCanvasOptions = JSON.parse(canvasOptions || "{}");
+
+    console.log(title, description, link, board, tags)
+    console.dir(media)
+    console.dir(parsedTextOptions)
+    console.dir(parsedCanvasOptions)
+}
