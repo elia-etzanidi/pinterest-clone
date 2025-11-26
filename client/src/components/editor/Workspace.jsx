@@ -1,10 +1,10 @@
 import useEditorStore from "../../utils/editorStore";
 import Image from "../image/Image";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const Workspace = ({previewImg}) => {
 
-  const {textOptions, setTextOptions, canvasOptions, setCanvasOptions} = useEditorStore();
+  const {setSelectedLayer, textOptions, setTextOptions, canvasOptions, setCanvasOptions} = useEditorStore();
 
   useEffect(() => {
 
@@ -19,6 +19,39 @@ const Workspace = ({previewImg}) => {
 
   },[previewImg, canvasOptions, setCanvasOptions]);
 
+  const itemRef = useRef(null);
+  const ContainerRef = useRef(null);
+  const dragging = useRef(false);
+  const offset = useRef({x:0, y:0});
+
+  const handleMouseMove = (e) => {
+    if(!dragging.current) return;
+
+    setTextOptions({
+      ...textOptions,
+      left: e.clientX - offset.current.x,
+      top: e.clientY - offset.current.y
+    });
+  };
+
+  const handleMouseUp = (e) => {
+    dragging.current = false;
+  };
+
+  const handleMouseLeave = (e) => {
+    dragging.current = false;
+  };
+
+  const handleMouseDown = (e) => {
+
+    setSelectedLayer("text");
+    dragging.current = true;
+    offset.current = {
+      x: e.clientX - textOptions.left,
+      y: e.clientY - textOptions.top
+    };
+  };
+
   return (
     <div className="workspace">
       <div 
@@ -27,6 +60,10 @@ const Workspace = ({previewImg}) => {
           height: canvasOptions.height, 
           backgroundColor: canvasOptions.backgroundColor
         }}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+        ref={ContainerRef}
       >
         <img src={previewImg.url} alt="" />
         {textOptions.text && (
@@ -37,6 +74,8 @@ const Workspace = ({previewImg}) => {
                 top: textOptions.top, 
                 fontSize: `${textOptions.fontSize}px`,
             }}
+            ref={itemRef}
+            onMouseDown={handleMouseDown}
           >
             <input 
               type="text" 
