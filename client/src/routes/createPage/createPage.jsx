@@ -58,7 +58,7 @@ const handleSubmit = async () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(res);
+      navigate(`/pin/${res.data._id}`)
     } catch (err) {
       console.log("Error creating pin:", err);
     }
@@ -133,7 +133,7 @@ const handleSubmit = async () => {
           <div className="createFormItem">
             <label htmlFor="title">Board</label>
             <select name="board" id="board">
-              <option>Choose a board</option>
+              <option value="">Choose a board</option>
               <option value="1">Board 1</option>
               <option value="2">Board 2</option>
               <option value="3">Board 3</option>
