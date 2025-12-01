@@ -1,19 +1,25 @@
-import { StrictMode } from 'react'
+import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.jsx'
-import HomePage from './routes/homePage/homepage.jsx'
-import CreatePage from './routes/createPage/createPage.jsx'
-import AuthPage from './routes/authPage/authPage.jsx'
-import PostPage from './routes/postPage/postPage.jsx'
+//import HomePage from './routes/homePage/homepage.jsx'
+//import CreatePage from './routes/createPage/createPage.jsx'
+//import AuthPage from './routes/authPage/authPage.jsx'
+//import PostPage from './routes/postPage/postPage.jsx'
 import { Routes, Route, BrowserRouter } from "react-router";
-import ProfilePage from './routes/profilePage/profilePage.jsx'
-import SearchPage from './routes/searchPage/searchPage.jsx'
+//import ProfilePage from './routes/profilePage/profilePage.jsx'
+//import SearchPage from './routes/searchPage/searchPage.jsx'
 import MainLayout from './routes/layouts/mainLayout.jsx'
 import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+
+const HomePage = React.lazy(() => import('./routes/homePage/homepage.jsx'))
+const CreatePage = React.lazy(() => import('./routes/createPage/createPage.jsx'))
+const AuthPage = React.lazy(() => import('./routes/authPage/authPage.jsx'))
+const PostPage = React.lazy(() => import('./routes/postPage/postPage.jsx'))
+const ProfilePage = React.lazy(() => import('./routes/profilePage/profilePage.jsx'))
+const SearchPage = React.lazy(() => import('./routes/searchPage/searchPage.jsx'))
 
 const queryClient = new QueryClient()
 
