@@ -28,7 +28,7 @@ const postPage = () => {
           <Image src={data.media} alt='' w={736}/>
         </div>
         <div className="postDetails">
-          <PostInteractions />
+          <PostInteractions postId={id} />
           <Link to={`/${data.user.username}`} className='postUser'>
             <Image src={data.user.img || "/general/noAvatar.png"} />
             <span>{data.user.displayName}</span>
